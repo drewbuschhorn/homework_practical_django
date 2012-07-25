@@ -3,6 +3,11 @@
 		<title>{{ flatpage.title }}</title>
 	</head>
 	<body>
+		<form method="GET" action="/search/">
+			<p><label for="id_q">Search:</label>
+			<input type="text" id="id_q" name="q" />
+			<input type="submit" value="Submit" /></p>
+		</form>
 		<h1>{{ flatpage.title }}</h1>
 		<p>{{ flatpage.content }}</p>
 	</body>
