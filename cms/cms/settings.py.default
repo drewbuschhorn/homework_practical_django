@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'search', #Different from example in book
+    'coltrane',
 )
 
 # A sample logging configuration. The only tangible logging
