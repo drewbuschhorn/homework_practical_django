@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'search', #Different from example in book
     'coltrane',
+    'tagging',
 )
 
 # A sample logging configuration. The only tangible logging
