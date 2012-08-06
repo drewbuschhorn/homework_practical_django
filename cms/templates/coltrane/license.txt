@@ -1,0 +1,1 @@
+Some ( most ) templates taken from https://bitbucket.org/philgyford/practical-django-projects/src/8dcd539555cb/templates/cms/coltrane

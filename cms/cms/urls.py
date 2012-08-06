@@ -24,5 +24,6 @@ urlpatterns = patterns('',
 	{'document_root': os.path.join(PROJECT_PATH, '../vendors/tinymce/jscripts/tiny_mce')}),
     #Page 30 has the view as cms.search.views.search, but this makes more sense to me ... and works.
     url(r'^search/$', 'search.views.search'),
-    url(r'',include('django.contrib.flatpages.urls'))
+    url(r'^weblog/', include('coltrane.urls')),
+    #url(r'',include('django.contrib.flatpages.urls')),
 )
