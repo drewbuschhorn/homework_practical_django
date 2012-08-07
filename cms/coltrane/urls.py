@@ -6,10 +6,11 @@ import os
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 ##
 
-from coltrane.models import Entry, Link
+from coltrane.models import Entry, Link, Category
+from tagging.models import Tag
 
 entry_info_dict = {
-	'queryset': Entry.objects.all(),
+	'queryset': Entry.live.all(),
 	'date_field' : 'pub_date',
 }
 
@@ -35,7 +36,11 @@ urlpatterns = patterns('django.views.generic.date_based',
 
 )
 
-urlpatterns += patterns('coltrane.views',
-    url(r'^categories/$','category_list'),
-    url(r'^categories/(?P<slug>[-\w]+)/$','category_detail'),
+
+urlpatterns += patterns('',
+    url(r'^categories/$','django.views.generic.list_detail.object_list',{'queryset': Category.objects.all()}),
+    url(r'^categories/(?P<slug>[-\w]+)/$','coltrane.views.category_detail'),
+    url(r'^tags/$','django.views.generic.list_detail.object_list',{'queryset': Tag.objects.all()}),
+    url(r'^tags/entries/(?P<tag>[-\w]+)/$','tagging.views.tagged_object_list', { 'queryset_or_model': Entry, 'template_name': 'coltrane/entries_by_tag.html' }),
+    url(r'^tags/links/(?P<tag>[-\w]+)/$','tagging.views.tagged_object_list', { 'queryset_or_model': Link, 'template_name': 'coltrane/links_by_tag.html' }),
 )

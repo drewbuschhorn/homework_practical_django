@@ -23,6 +23,16 @@ class Category(models.Model):
 	def get_absolute_url(self):
 		return "/categories/%s/" % self.slug
 
+	def live_entry_set(self):
+		from coltane.models import Entry
+		return self.entry_set.filter(status=Entry.LIVE_STATUS)
+
+
+class LiveEntryManager(models.Manager):
+	def get_query_set(self):
+		return super(LiveEntryManager,self).get_query_set().filter(status=self.model.LIVE_STATUS)
+
+
 class Entry(models.Model):
 	LIVE_STATUS = 1
 	DRAFT_STATUS = 2
@@ -32,6 +42,9 @@ class Entry(models.Model):
                 (DRAFT_STATUS, 'Draft'),
 		(HIDDEN_STATUS, 'Hidden'),
         )	
+
+	live = LiveEntryManager()
+	objects = models.Manager()
 
         class Meta:
                 verbose_name_plural="Entries"
