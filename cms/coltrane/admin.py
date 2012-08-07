@@ -1,5 +1,5 @@
 from django.contrib import admin
-from coltrane.models import Category, Entry
+from coltrane.models import Category, Entry, Link
 
 class CategoryAdmin(admin.ModelAdmin):
 	model = Category
@@ -12,3 +12,9 @@ class EntryAdmin(admin.ModelAdmin):
 	prepopulated_fields = {'slug':('title',)}
 
 admin.site.register(Entry, EntryAdmin)
+
+class LinkAdmin(admin.ModelAdmin):
+	model = Link
+	prepopulated_fields = {'slug':('title',)}
+
+admin.site.register(Link, LinkAdmin)

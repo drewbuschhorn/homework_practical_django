@@ -74,3 +74,42 @@ class Entry(models.Model):
 		if self.excerpt:
 			self.excerpt_html = markdown(self.excerpt)
 		super(Entry, self).save()
+
+class Link(models.Model):
+	title = models.CharField(max_length=250)
+	description = models.TextField(blank=True)
+	description_html = models.TextField(blank=True,editable=False)
+	url = models.URLField(unique=True)
+	posted_by = models.ForeignKey(User)
+	pub_date = models.DateTimeField(default=datetime.datetime.now)
+	slug = models.SlugField(unique_for_date='pub_date')
+	tags = TagField()
+	enable_comments = models.BooleanField(default = True)
+	post_elsewhere = models.BooleanField('Post to Delicious',default=True)
+	via_link = models.CharField('Via',max_length='250',blank=True)
+	via_url = models.URLField('Via URL',blank=True)
+	
+	class Meta:
+		ordering = ['-pub_date']
+	
+	# class Admin:
+	#	pass
+
+	def save(self):
+		if self.description:
+			self.description_html = markdown(self.description)
+		#Not bothering with delicious
+		super(Link,self).save()
+	
+
+	def __unicode__(self):
+		return self 
+
+	@models.permalink
+	def get_absolute_url(self):
+		return ('coltrane_link_detail',(), {
+			'year': self.pub_date.strftime("%Y"),
+			'month': self.pub_date.strftime("%b").lower(),
+			'day': self.pub_date.strftime("%d"),
+			'slug': self.slug,
+			})
